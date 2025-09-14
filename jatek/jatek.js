@@ -21,7 +21,7 @@ scene("main", () => {
         rect(width(), 48),
         pos(0, height() - 48),
         area(),
-        solid(),
+        body({ isStatic: true }),
         color(100, 100, 255),
     ]);
 
