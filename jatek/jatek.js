@@ -1,8 +1,6 @@
 // TODO: document
 
 kaboom({
-	width: 480,
-	height: 640,
 	background: [74, 48, 82],
 })
 
