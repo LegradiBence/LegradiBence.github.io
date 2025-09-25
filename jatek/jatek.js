@@ -257,7 +257,7 @@ scene("battle", () => {
 		destroy(e)
 		shake(2)
 		add([
-			pos(p.add(rand(vec2(-rad), vec2(rad)))),
+			pos(e.add(rand(vec2(-rad), vec2(rad)))),
 			sprite("boom"),
 			scale(1 * size, 1 * size),
 			lifespan(0.1),
