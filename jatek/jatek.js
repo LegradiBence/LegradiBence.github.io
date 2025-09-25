@@ -5,12 +5,12 @@ kaboom({
 })
 
 const objs = [
-    'Enemy_1',
-    'Enemy_2',
-    'Enemy_3',
-    'Enemy_4',
-    'Enemy_5',
-    'Enemy_6',
+	'Enemy_1',
+	'Enemy_2',
+	'Enemy_3',
+	'Enemy_4',
+	'Enemy_5',
+	'Enemy_6',
 ]
 
 for (const obj of objs) {
@@ -184,7 +184,7 @@ scene("battle", () => {
 				for (let i = 0; i < 2; i++) {
 					add([
 						pos(p.add(rand(vec2(-rad), vec2(rad)))),
-						sprite("boom"),
+						rect(4, 4), ,
 						scale(1 * size, 1 * size),
 						lifespan(0.1),
 						grow(rand(48, 72) * size),
@@ -256,7 +256,14 @@ scene("battle", () => {
 	on("death", "enemy", (e) => {
 		destroy(e)
 		shake(2)
-		addKaboom(e.pos)
+		add([
+			pos(p.add(rand(vec2(-rad), vec2(rad)))),
+			sprite("boom"),
+			scale(1 * size, 1 * size),
+			lifespan(0.1),
+			grow(rand(48, 72) * size),
+			anchor("center"),
+		])
 	})
 
 	on("hurt", "enemy", (e) => {
