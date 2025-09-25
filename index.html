@@ -118,6 +118,30 @@
     <h2>Játék</h2>
       <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
       <script src="jatek/jatek.js" defer></script>
+      <div id="controls">
+  <button id="left">⬅️</button>
+  <button id="shoot">🔫</button>
+  <button id="right">➡️</button>
+</div>
+
+<style>
+  #controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+  }
+  #controls button {
+    font-size: 2rem;
+    padding: 20px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+  }
+</style>
 </div>
 </body>
 </html>

@@ -1,6 +1,8 @@
 // TODO: document
 
 kaboom({
+	width: 480,
+	height: 640,
 	background: [74, 48, 82],
 })
 
@@ -24,6 +26,18 @@ loadSound("hit", "/examples/sounds/hit.mp3")
 loadSound("shoot", "/examples/sounds/shoot.mp3")
 loadSound("explode", "/examples/sounds/explode.mp3")
 loadSound("OtherworldlyFoe", "/examples/sounds/OtherworldlyFoe.mp3")
+
+const leftBtn = document.getElementById("left")
+const rightBtn = document.getElementById("right")
+const shootBtn = document.getElementById("shoot")
+
+leftBtn.addEventListener("touchstart", () => player.move(-PLAYER_SPEED, 0))
+rightBtn.addEventListener("touchstart", () => player.move(PLAYER_SPEED, 0))
+shootBtn.addEventListener("touchstart", () => {
+	spawnBullet(player.pos.sub(16, 0))
+	spawnBullet(player.pos.add(16, 0))
+})
+
 
 scene("battle", () => {
 
@@ -257,11 +271,11 @@ scene("battle", () => {
 		destroy(e)
 		shake(2)
 		add([
-		sprite("boom"),
-		pos(e.pos),
-		scale(2),
-		anchor("center"),
-		lifespan(0.5),
+			sprite("boom"),
+			pos(e.pos),
+			scale(2),
+			anchor("center"),
+			lifespan(0.5),
 		])
 	})
 
