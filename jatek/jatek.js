@@ -31,12 +31,7 @@ const leftBtn = document.getElementById("left")
 const rightBtn = document.getElementById("right")
 const shootBtn = document.getElementById("shoot")
 
-leftBtn.addEventListener("touchstart", () => player.move(-PLAYER_SPEED, 0))
-rightBtn.addEventListener("touchstart", () => player.move(PLAYER_SPEED, 0))
-shootBtn.addEventListener("touchstart", () => {
-	spawnBullet(player.pos.sub(16, 0))
-	spawnBullet(player.pos.add(16, 0))
-})
+
 
 
 scene("battle", () => {
@@ -364,6 +359,30 @@ scene("battle", () => {
 	])
 
 	spawnTrash()
+
+	let movingLeft = false
+	let movingRight = false
+
+	leftBtn.addEventListener("touchstart", () => movingLeft = true)
+	leftBtn.addEventListener("touchend", () => movingLeft = false)
+
+	rightBtn.addEventListener("touchstart", () => movingRight = true)
+	rightBtn.addEventListener("touchend", () => movingRight = false)
+
+	shootBtn.addEventListener("touchstart", () => {
+		spawnBullet(player.pos.sub(16, 0))
+		spawnBullet(player.pos.add(16, 0))
+		play("shoot", {
+			volume: 0.3,
+			detune: rand(-1200, 1200),
+		})
+	})
+
+	// Folyamatos mozgatás
+	onUpdate(() => {
+		if (movingLeft) player.move(-PLAYER_SPEED, 0)
+		if (movingRight) player.move(PLAYER_SPEED, 0)
+	})
 
 })
 
