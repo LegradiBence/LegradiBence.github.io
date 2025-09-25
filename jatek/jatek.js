@@ -99,25 +99,25 @@ scene("battle", () => {
 	onKeyRelease("up", () => { insaneMode = false; music.speed = 1 })
 
 	// --- Mobile buttons ---
-	leftBtn.addEventListener("touchstart", () => movingLeft = true)
-	leftBtn.addEventListener("touchend", () => movingLeft = false)
-	rightBtn.addEventListener("touchstart", () => movingRight = true)
-	rightBtn.addEventListener("touchend", () => movingRight = false)
-	shootBtn.addEventListener("touchstart", () => {
-		spawnBullet(player.pos.sub(16, 0))
-		spawnBullet(player.pos.add(16, 0))
-		play("shoot", { volume: 0.3, detune: rand(-1200, 1200) })
-	})
+	leftBtn.ontouchstart = () => movingLeft = true
+	leftBtn.ontouchend = () => movingLeft = false
 
-	// --- Update loop ---
+	rightBtn.ontouchstart = () => movingRight = true
+	rightBtn.ontouchend = () => movingRight = false
+
+	shootBtn.ontouchstart = () => {
+		spawnBullet(player.pos.sub(16,0))
+		spawnBullet(player.pos.add(16,0))
+		play("shoot", {volume:0.3, detune:rand(-1200,1200)})
+	}
 	onUpdate(() => {
-		if (movingLeft) {
-			player.move(-PLAYER_SPEED, 0)
-			if (player.pos.x < 0) player.pos.x = width() // teleport
+		if(movingLeft){
+			player.move(-PLAYER_SPEED,0)
+			if(player.pos.x<0) player.pos.x = width()
 		}
-		if (movingRight) {
-			player.move(PLAYER_SPEED, 0)
-			if (player.pos.x > width()) player.pos.x = 0 // teleport
+		if(movingRight){
+			player.move(PLAYER_SPEED,0)
+			if(player.pos.x>width()) player.pos.x = 0
 		}
 	})
 
