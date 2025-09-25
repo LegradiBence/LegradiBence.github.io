@@ -17,7 +17,7 @@ for (const obj of objs) {
 	loadSprite(obj, `jatek/kepek/${obj}.jpg`)
 }
 
-loadSprite("lovesz", "jatek/kepek/lovesz.jpg")
+loadSprite("lovesz", `jatek/kepek/lovesz.jpg`)
 loadSound("hit", "/examples/sounds/hit.mp3")
 loadSound("shoot", "/examples/sounds/shoot.mp3")
 loadSound("explode", "/examples/sounds/explode.mp3")
