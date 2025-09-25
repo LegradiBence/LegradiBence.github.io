@@ -7,7 +7,7 @@ kaboom({
 });
 
 // Sprites
-loadSprite("jatekos", "./kepek/lovesz.png");
+loadSprite("jatekos", "./kepek/proba.png");
 loadSprite("ellenseg", "./kepek/Enemy_1.png");
 
 // Állapotjelző, hogy épp ütés van-e
