@@ -133,7 +133,7 @@ scene("battle", () => {
 	// 	})
 
 	const player = add([
-		sprite("bean"),
+		sprite("player"),
 		area(),
 		pos(width() / 2, height() - 64),
 		anchor("center"),
