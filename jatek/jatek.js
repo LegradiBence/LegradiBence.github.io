@@ -13,7 +13,7 @@ const objs = [
 ]
 
 for (const obj of objs) {
-	loadSprite(obj, `/kepek/${obj}.jpg`)
+	loadSprite(obj, `kepek/${obj}.jpg`)
 }
 
 loadBean()
