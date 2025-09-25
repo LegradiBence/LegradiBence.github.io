@@ -17,7 +17,7 @@ for (const obj of objs) {
 	loadSprite(obj, `jatek/kepek/${obj}.jpg`)
 }
 
-loadSprite("player", "jatek/kepek/lovesz.jpg")
+loadSprite("lovesz", "jatek/kepek/lovesz.jpg")
 loadSound("hit", "/examples/sounds/hit.mp3")
 loadSound("shoot", "/examples/sounds/shoot.mp3")
 loadSound("explode", "/examples/sounds/explode.mp3")
@@ -133,7 +133,7 @@ scene("battle", () => {
 	// 	})
 
 	const player = add([
-		sprite("player"),
+		sprite("lovesz"),
 		area(),
 		pos(width() / 2, height() - 64),
 		anchor("center"),
