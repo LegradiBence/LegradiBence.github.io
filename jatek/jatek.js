@@ -184,7 +184,7 @@ scene("battle", () => {
 				for (let i = 0; i < 2; i++) {
 					add([
 						pos(p.add(rand(vec2(-rad), vec2(rad)))),
-						rect(4, 4), ,
+						rect(4, 4),
 						scale(1 * size, 1 * size),
 						lifespan(0.1),
 						grow(rand(48, 72) * size),
@@ -257,12 +257,11 @@ scene("battle", () => {
 		destroy(e)
 		shake(2)
 		add([
-			pos(e.add(rand(vec2(-rad), vec2(rad)))),
-			sprite("boom"),
-			scale(1 * size, 1 * size),
-			lifespan(0.1),
-			grow(rand(48, 72) * size),
-			anchor("center"),
+		sprite("boom"),
+		pos(e.pos),
+		scale(2),
+		anchor("center"),
+		lifespan(0.5),
 		])
 	})
 
