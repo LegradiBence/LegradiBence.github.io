@@ -18,6 +18,8 @@ for (const obj of objs) {
 }
 
 loadSprite("lovesz", `jatek/kepek/lovesz.jpg`)
+loadSprite("lovedek", `jatek/kepek/bullet.png`)
+loadSprite("boom", `jatek/kepek/BOOM.png`)
 loadSound("hit", "/examples/sounds/hit.mp3")
 loadSound("shoot", "/examples/sounds/shoot.mp3")
 loadSound("explode", "/examples/sounds/explode.mp3")
@@ -30,7 +32,7 @@ scene("battle", () => {
 	const BOSS_SPEED = 48
 	const PLAYER_SPEED = 480
 	const STAR_SPEED = 120
-	const BOSS_HEALTH = 10
+	const BOSS_HEALTH = 100
 	const OBJ_HEALTH = 4
 
 	const bossName = choose(objs)
@@ -182,7 +184,7 @@ scene("battle", () => {
 				for (let i = 0; i < 2; i++) {
 					add([
 						pos(p.add(rand(vec2(-rad), vec2(rad)))),
-						rect(4, 4),
+						sprite("boom"),
 						scale(1 * size, 1 * size),
 						lifespan(0.1),
 						grow(rand(48, 72) * size),
@@ -195,7 +197,7 @@ scene("battle", () => {
 
 	function spawnBullet(p) {
 		add([
-			rect(12, 48),
+			sprite("lovedek"),
 			area(),
 			pos(p),
 			anchor("center"),
@@ -233,9 +235,9 @@ scene("battle", () => {
 			anchor("bot"),
 			"trash",
 			"enemy",
-			{ speed: rand(TRASH_SPEED * 0.5, TRASH_SPEED * 1.5) },
+			{ speed: rand(TRASH_SPEED * 0.7, TRASH_SPEED * 2) },
 		])
-		wait(insaneMode ? 0.1 : 0.3, spawnTrash)
+		wait(insaneMode ? 0.3 : 0.5, spawnTrash)
 	}
 
 	const boss = add([
@@ -369,6 +371,9 @@ scene("win", ({ time, boss }) => {
 		pos(width() / 2, height() / 2),
 	])
 
+	wait(3, () => {
+		go("battle")
+	})
 })
 
 go("battle")
