@@ -10,13 +10,14 @@ const objs = [
     'Enemy_3',
     'Enemy_4',
     'Enemy_5',
+    'Enemy_6',
 ]
 
 for (const obj of objs) {
 	loadSprite(obj, `jatek/kepek/${obj}.jpg`)
 }
 
-loadBean()
+loadSprite("player", "jatek/kepek/lovesz.jpg")
 loadSound("hit", "/examples/sounds/hit.mp3")
 loadSound("shoot", "/examples/sounds/shoot.mp3")
 loadSound("explode", "/examples/sounds/explode.mp3")
