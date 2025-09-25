@@ -361,25 +361,39 @@ scene("battle", () => {
 	let movingLeft = false
 	let movingRight = false
 
-	leftBtn.addEventListener("touchstart", () => movingLeft = true)
-	leftBtn.addEventListener("touchend", () => movingLeft = false)
+	if (!window.controlsSetup) {
+		leftBtn.addEventListener("touchstart", () => movingLeft = true)
+		leftBtn.addEventListener("touchend", () => movingLeft = false)
 
-	rightBtn.addEventListener("touchstart", () => movingRight = true)
-	rightBtn.addEventListener("touchend", () => movingRight = false)
+		rightBtn.addEventListener("touchstart", () => movingRight = true)
+		rightBtn.addEventListener("touchend", () => movingRight = false)
 
-	shootBtn.addEventListener("touchstart", () => {
-		spawnBullet(player.pos.sub(16, 0))
-		spawnBullet(player.pos.add(16, 0))
-		play("shoot", {
-			volume: 0.3,
-			detune: rand(-1200, 1200),
+		shootBtn.addEventListener("touchstart", () => {
+			spawnBullet(player.pos.sub(16, 0))
+			spawnBullet(player.pos.add(16, 0))
+			play("shoot", {
+				volume: 0.3,
+				detune: rand(-1200, 1200),
+			})
 		})
-	})
+
+		window.controlsSetup = true
+	}
 
 	// Folyamatos mozgatás
 	onUpdate(() => {
-		if (movingLeft) player.move(-PLAYER_SPEED, 0)
-		if (movingRight) player.move(PLAYER_SPEED, 0)
+		if (movingLeft) {
+			player.move(-PLAYER_SPEED, 0)
+			if (player.pos.x < 0) {
+				player.pos.x = width()
+			}
+		}
+		if (movingRight) {
+			player.move(PLAYER_SPEED, 0)
+			if (player.pos.x > width()) {
+				player.pos.x = 0
+			}
+		}
 	})
 
 })
