@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kolbásztöltés</title>
     <style>
         body {
@@ -11,30 +13,35 @@
             margin: 0;
             padding: 20px;
         }
+
         .character {
             background-color: #fff;
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .character img {
             max-width: 200px;
             height: auto;
             border-radius: 4px;
         }
+
         .character h2 {
             margin-top: 0;
         }
+
         .strengths {
             margin-top: 10px;
         }
     </style>
 </head>
+
 <body>
     <h1>Légrádi's</h1>
     <img src="kepek/csapat.jpg" alt="töltőcsapat" width="100%">
-    
+
     <h1>Töltők</h1>
 
     <div class="character">
@@ -76,7 +83,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="character">
         <img src="kepek/dani.jpg" alt="Karakter neve">
         <h2>Dani the dangerous</h2>
@@ -89,7 +96,7 @@
             </ul>
         </div>
     </div>
-    
+
     <div class="character">
         <img src="kepek/bence.jpg" alt="Karakter neve">
         <h2>Bence the boss</h2>
@@ -102,7 +109,7 @@
             </ul>
         </div>
     </div>
-        <div class="character">
+    <div class="character">
         <img src="kepek/bali.jpg" alt="Karakter neve">
         <h2>Birthday Bali</h2>
         <p>Itt egy rövid leírás a karakterről.</p>
@@ -114,34 +121,36 @@
             </ul>
         </div>
     </div>
-<div>
-    <h2>Játék</h2>
-      <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
-      <script src="jatek/jatek.js" defer></script>
-      <div id="controls">
-  <button id="left">⬅️</button>
-  <button id="shoot">🔫</button>
-  <button id="right">➡️</button>
-</div>
+    <div>
+        <h2>Játék</h2>
+        <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+        <script src="jatek/jatek.js" defer></script>
+        <div id="controls">
+            <div class="control-btn" id="left">⬅️</div>
+            <div class="control-btn" id="shoot">🔫</div>
+            <div class="control-btn" id="right">➡️</div>
+        </div>
 
-<style>
-  #controls {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-  }
-  #controls button {
-    font-size: 2rem;
-    padding: 20px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255,255,255,0.2);
-    color: white;
-  }
-</style>
-</div>
+        <style>
+            #controls {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 20px;
+            }
+
+            #controls button {
+                font-size: 2rem;
+                padding: 20px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+            }
+        </style>
+    </div>
 </body>
+
 </html>
