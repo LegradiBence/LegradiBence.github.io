@@ -92,7 +92,7 @@ canvas {
 /* Mobil irányítók */
 #controls {
   position: fixed;
-  bottom: 20px;
+  bottom: 5vh;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -102,8 +102,8 @@ canvas {
 }
 
 .control-btn {
-  font-size: clamp(2rem, 6vw, 3rem);
-  padding: 1rem;
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  padding: clamp(0.6rem, 3vw, 1rem);
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.6);
   color: white;
