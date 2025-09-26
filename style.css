@@ -109,7 +109,7 @@ canvas {
   color: white;
   user-select: none;
   -webkit-user-select: none;
-  touch-action: none;
+  touch-action: manipulation;
   text-align: center;
   transition: background 0.2s;
 }
