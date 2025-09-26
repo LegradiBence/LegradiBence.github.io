@@ -76,7 +76,7 @@ scene("battle", () => {
 		shootBtn.style.display = "none";
 	}
 
-	const music = play("OtherworldlyFoe")
+	const music = play("OtherworldlyFoe", { loop: true })
 
 	volume(0.5)
 
@@ -123,7 +123,7 @@ scene("battle", () => {
 	])
 
 	add([
-		text(bossName.toUpperCase(), { size: 120 }),
+		text("PIGS", { size: 120 }),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(4),
@@ -410,11 +410,8 @@ scene("battle", () => {
 
 scene("win", ({ time, boss }) => {
 
-	const b = burp({
-		loop: true,
-	})
-
-	loop(0.5, () => {
+	const b = burp()
+	const detuneLoop = loop(0.5, () => {
 		b.detune = rand(-1200, 1200)
 	})
 
@@ -433,6 +430,8 @@ scene("win", ({ time, boss }) => {
 	])
 
 	wait(3, () => {
+		detuneLoop.cancel()
+		b.stop()
 		go("battle")
 	})
 })
