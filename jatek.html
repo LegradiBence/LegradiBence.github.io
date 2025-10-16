@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kolbásztöltés - Játék</title>
+    <link rel="stylesheet" href="../style.css">
+    <script type="module">
+        // Firebase App (core)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBLyG5PdrBS0zL7bSDlTMPau2hOY2tWFKk",
+            authDomain: "kolbasztoltes-99ca5.firebaseapp.com",
+            projectId: "kolbasztoltes-99ca5",
+            storageBucket: "kolbasztoltes-99ca5.firebasestorage.app",
+            messagingSenderId: "473492625443",
+            appId: "1:473492625443:web:5334f2735a7385feacb996"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        window.db = getFirestore(app);
+    </script>
+</head>
+
+<body>
+    <h1>Kolbásztöltés</h1>
+
+    <div id="game-section">
+        <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+        <script src="jatek.js" defer></script>
+    </div>
+
+    <div id="controls">
+        <div class="control-btn" id="left">⬅️</div>
+        <div class="control-btn" id="shoot">🔫</div>
+        <div class="control-btn" id="right">➡️</div>
+    </div>
+
+    <div style="text-align:center; margin-top:20px;">
+        <a href="../index.html" class="game-button">🏠 Vissza a főoldalra</a>
+    </div>
+</body>
+
+</html>

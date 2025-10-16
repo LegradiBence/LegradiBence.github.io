@@ -30,7 +30,77 @@ const rightBtn = document.getElementById("right")
 const shootBtn = document.getElementById("shoot")
 
 
+async function saveScore(name, time, points) {
+	const scoresCol = collection(window.db, "scores");
+	await addDoc(scoresCol, { name, time, points, date: new Date() });
+}
 
+async function getTopScores() {
+	const scoresCol = collection(window.db, "scores");
+	const q = query(scoresCol, orderBy("points", "desc"), limit(10));
+	const snapshot = await getDocs(q);
+	return snapshot.docs.map(doc => doc.data());
+}
+
+scene("menu", () => {
+	add([
+		text("Kolbásztöltés", { size: 48 }),
+		pos(width() / 2, height() / 3),
+		anchor("center"),
+	])
+
+	add([
+		text("▶️ Indítás", { size: 32 }),
+		pos(width() / 2, height() / 2),
+		anchor("center"),
+		area(),
+		"startBtn",
+	])
+
+	add([
+		text("🏆 Scoreboard", { size: 24 }),
+		pos(width() / 2, height() / 2 + 80),
+		anchor("center"),
+		area(),
+		"scoreBtn",
+	])
+
+	onClick("startBtn", () => {
+		go("battle")
+	})
+
+	onClick("scoreBtn", () => {
+		go("scoreboard")
+	})
+})
+
+scene("scoreboard", async () => {
+	add([
+		text("🏆 Top Darálók", { size: 48 }),
+		pos(width() / 2, height() / 4),
+		anchor("center"),
+	]);
+
+	const scores = await getTopScores();
+
+	scores.forEach((s, i) => {
+		add([
+			text(`${i + 1}. ${s.name} — ${s.time.toFixed(2)}s — ${s.points} pont`, { size: 24 }),
+			pos(width() / 2, height() / 2 + i * 40),
+			anchor("center"),
+		]);
+	});
+
+	add([
+		text("🔙 Vissza", { size: 24 }),
+		pos(width() / 2, height() - 80),
+		anchor("center"),
+		area(),
+		"backBtn",
+	]);
+
+	onClick("backBtn", () => go("menu"));
+});
 
 scene("battle", () => {
 
@@ -38,17 +108,15 @@ scene("battle", () => {
 	const TRASH_SPEED = 120
 	const BOSS_SPEED = 48
 	const PLAYER_SPEED = 480
-	const STAR_SPEED = 120
 	const BOSS_HEALTH = 100
 	const OBJ_HEALTH = 4
-
 	const bossName = choose(objs)
 
 	let insaneMode = false
 	// Mobil / desktop detektálás
 	const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
-	// Gomb állapotok (minden battle indításnál reset)
+	let points = 0;
 	let movingLeft = false;
 	let movingRight = false;
 
@@ -131,6 +199,16 @@ scene("battle", () => {
 		fixed(),
 	])
 
+	const scoreText = add([
+		text("Pont: 0", { size: 24 }),
+		pos(12, 64),
+		fixed()
+	]);
+
+	onUpdate(() => {
+		scoreText.text = `Pont: ${points}`;
+	});
+
 	const sky = add([
 		rect(width(), height()),
 		color(0, 0, 0),
@@ -150,26 +228,6 @@ scene("battle", () => {
 		}
 	})
 
-	// 	add([
-	// 		sprite("stars"),
-	// 		scale(width() / 240, height() / 240),
-	// 		pos(0, 0),
-	// 		"stars",
-	// 	])
-
-	// 	add([
-	// 		sprite("stars"),
-	// 		scale(width() / 240, height() / 240),
-	// 		pos(0, -height()),
-	// 		"stars",
-	// 	])
-
-	// 	onUpdate("stars", (r) => {
-	// 		r.move(0, STAR_SPEED * (insaneMode ? 10 : 1))
-	// 		if (r.pos.y >= height()) {
-	// 			r.pos.y -= height() * 2
-	// 		}
-	// 	})
 
 	const player = add([
 		sprite("lovesz"),
@@ -291,6 +349,7 @@ scene("battle", () => {
 	])
 
 	on("death", "enemy", (e) => {
+		points += 1;
 		destroy(e)
 		shake(2)
 		add([
@@ -349,13 +408,17 @@ scene("battle", () => {
 		healthbar.set(boss.hp())
 	})
 
-	boss.onDeath(() => {
-		music.stop()
+	boss.onDeath(async () => {
+		music.stop();
+
+		const name = prompt("Add meg a neved a score-hoz:", "Játékos");
+		await saveScore(name, timer.time, points);
+
 		go("win", {
 			time: timer.time,
 			boss: bossName,
-		})
-	})
+		});
+	});
 
 	const healthbar = add([
 		rect(width(), 24),
@@ -436,4 +499,4 @@ scene("win", ({ time, boss }) => {
 	})
 })
 
-go("battle")
+go("menu")

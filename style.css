@@ -118,6 +118,21 @@ canvas {
   background: rgba(255, 255, 255, 0.3);
 }
 
+.game-button {
+  display: inline-block;
+  background: #4a3052;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.game-button:hover {
+  background: #6a4f72;
+}
+
 /* Reszponzív finomhangolás */
 @media (max-width: 768px) {
   body {
@@ -132,4 +147,10 @@ canvas {
   .control-btn {
     padding: 0.8rem;
   }
+}
+
+html, body {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
