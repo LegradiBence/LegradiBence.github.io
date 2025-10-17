@@ -53,7 +53,7 @@ async function showSaveScore(time, points) {
 }
 async function saveScore(name, time, points) {
 	try {
-		const scoresCol = collection(window.db, "scores");
+		const scoresCol = collection(db, "scores");
 		await addDoc(scoresCol, { name, time, points, date: new Date() });
 	} catch (err) {
 		console.error("Hiba a score mentésekor:", err);
@@ -62,7 +62,7 @@ async function saveScore(name, time, points) {
 
 async function getTopScores() {
 	try {
-		const scoresCol = collection(window.db, "scores");
+		const scoresCol = collection(db, "scores");
 		const q = query(scoresCol, orderBy("points", "desc"), limit(10));
 		const snapshot = await getDocs(q);
 		return snapshot.docs.map(doc => doc.data());
