@@ -293,7 +293,7 @@ scene("battle", () => {
 		addExplode(center(), 12, 120, 30)
 		wait(1, () => {
 			music.paused = true
-			go("battle")
+			go("menu")
 		})
 	})
 
@@ -434,12 +434,14 @@ scene("battle", () => {
 
 	boss.onDeath(async () => {
 		music.stop();
+		every("trash", t => destroy(t));
+		every("bullet", b => destroy(b));
+		player.hidden = true;
+
+		// Pont mentése
 		await showSaveScore(timer.time, points);
 
-		go("win", {
-			time: timer.time,
-			boss: bossName,
-		});
+		go("win", { time: timer.time, boss: bossName });
 	});
 
 	const healthbar = add([
@@ -517,7 +519,7 @@ scene("win", ({ time, boss }) => {
 	wait(3, () => {
 		detuneLoop.cancel()
 		b.stop()
-		go("battle")
+		go("menu")
 	})
 })
 
