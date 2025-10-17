@@ -1,4 +1,9 @@
-// TODO: document
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 kaboom({
 	background: [74, 48, 82],
