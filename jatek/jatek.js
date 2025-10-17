@@ -31,15 +31,23 @@ const shootBtn = document.getElementById("shoot")
 
 
 async function saveScore(name, time, points) {
-	const scoresCol = collection(window.db, "scores");
-	await addDoc(scoresCol, { name, time, points, date: new Date() });
+  try {
+    const scoresCol = collection(window.db, "scores");
+    await addDoc(scoresCol, { name, time, points, date: new Date() });
+  } catch (err) {
+    console.error("Hiba a score mentésekor:", err);
+  }
 }
 
 async function getTopScores() {
-	const scoresCol = collection(window.db, "scores");
-	const q = query(scoresCol, orderBy("points", "desc"), limit(10));
-	const snapshot = await getDocs(q);
-	return snapshot.docs.map(doc => doc.data());
+	try {
+		const scoresCol = collection(window.db, "scores");
+		const q = query(scoresCol, orderBy("points", "desc"), limit(10));
+		const snapshot = await getDocs(q);
+		return snapshot.docs.map(doc => doc.data());
+	} catch (err) {
+		console.error("Hiba a score lekérésekor:", err);
+	}
 }
 
 scene("menu", () => {
