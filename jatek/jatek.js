@@ -434,8 +434,8 @@ scene("battle", () => {
 
 	boss.onDeath(async () => {
 		music.stop();
-		every("trash", t => destroy(t));
-		every("bullet", b => destroy(b));
+		get("trash").forEach(t => destroy(t));
+		get("bullet").forEach(b => destroy(b));
 		player.hidden = true;
 
 		// Pont mentése
