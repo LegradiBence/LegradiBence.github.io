@@ -27,7 +27,11 @@
 
 <body>
     <h1>Kolbásztöltés</h1>
-
+    <div id="nameInputWrapper"
+        style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
+        <input type="text" id="nameInput" placeholder="Add meg a neved" />
+        <button id="saveScoreBtn">Mentés</button>
+    </div>
     <div id="game-section">
         <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
         <script src="jatek/jatek.js" defer></script>

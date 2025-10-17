@@ -29,14 +29,30 @@ const leftBtn = document.getElementById("left")
 const rightBtn = document.getElementById("right")
 const shootBtn = document.getElementById("shoot")
 
+async function showSaveScore(time, points) {
+	const wrapper = document.getElementById("nameInputWrapper");
+	const input = document.getElementById("nameInput");
+	const btn = document.getElementById("saveScoreBtn");
 
+	wrapper.style.display = "block";
+	input.value = "";
+
+	return new Promise(resolve => {
+		btn.onclick = async () => {
+			const name = input.value || "Játékos";
+			wrapper.style.display = "none";
+			await saveScore(name, time, points);
+			resolve();
+		}
+	});
+}
 async function saveScore(name, time, points) {
-  try {
-    const scoresCol = collection(window.db, "scores");
-    await addDoc(scoresCol, { name, time, points, date: new Date() });
-  } catch (err) {
-    console.error("Hiba a score mentésekor:", err);
-  }
+	try {
+		const scoresCol = collection(window.db, "scores");
+		await addDoc(scoresCol, { name, time, points, date: new Date() });
+	} catch (err) {
+		console.error("Hiba a score mentésekor:", err);
+	}
 }
 
 async function getTopScores() {
@@ -418,9 +434,7 @@ scene("battle", () => {
 
 	boss.onDeath(async () => {
 		music.stop();
-
-		const name = prompt("Add meg a neved a score-hoz:", "Játékos");
-		await saveScore(name, timer.time, points);
+		await showSaveScore(timer.time, points);
 
 		go("win", {
 			time: timer.time,
