@@ -30,23 +30,34 @@ loadSound("hit", "/examples/sounds/hit.mp3")
 loadSound("shoot", "/examples/sounds/shoot.mp3")
 loadSound("explode", "/examples/sounds/explode.mp3")
 loadSound("OtherworldlyFoe", "/examples/sounds/OtherworldlyFoe.mp3")
+loadFont("myfont", `jatek/font/font.ttf`)
 
 const leftBtn = document.getElementById("left")
 const rightBtn = document.getElementById("right")
 const shootBtn = document.getElementById("shoot")
+const BULLET_SPEED = 1200
+const TRASH_SPEED = 120
+const BOSS_SPEED = 48
+const PLAYER_SPEED = 480
+const BOSS_HEALTH = 100
+const OBJ_HEALTH = 4
 
 async function showSaveScore(time, points) {
+	const overlay = document.getElementById("overlay");
 	const wrapper = document.getElementById("nameInputWrapper");
 	const input = document.getElementById("nameInput");
 	const btn = document.getElementById("saveScoreBtn");
 
+	overlay.style.display = "block";
 	wrapper.style.display = "block";
 	input.value = "";
+	input.focus();
 
 	return new Promise(resolve => {
 		btn.onclick = async () => {
 			const name = input.value || "Játékos";
 			wrapper.style.display = "none";
+			overlay.style.display = "none";
 			await saveScore(name, time, points);
 			resolve();
 		}
@@ -71,6 +82,37 @@ async function getTopScores() {
 		console.error("Hiba a score lekérésekor:", err);
 	}
 }
+function spawnBullet(p) {
+	add([
+		sprite("lovedek"),
+		area(),
+		pos(p),
+		anchor("center"),
+		color(127, 127, 255),
+		outline(4),
+		move(UP, BULLET_SPEED),
+		offscreen({ destroy: true }),
+		// strings here means a tag
+		"bullet",
+	])
+}
+
+let player = null;
+let movingLeft = false;
+let movingRight = false;
+
+leftBtn.addEventListener("mousedown", () => movingLeft = true);
+rightBtn.addEventListener("mousedown", () => movingRight = true);
+document.addEventListener("mouseup", () => {
+	movingLeft = false;
+	movingRight = false;
+});
+
+shootBtn.addEventListener("click", () => {
+	spawnBullet(player.pos.sub(16, 0));
+	spawnBullet(player.pos.add(16, 0));
+});
+
 
 scene("menu", () => {
 	add([
@@ -145,8 +187,8 @@ scene("scoreboard", async () => {
 
 	scores.forEach((s, i) => {
 		add([
-			text(`${i + 1}. ${s.name} — ${Number(s.time).toFixed(2)}s — ${s.points} pont`, { size: 24 }),
-			pos(width() / 2, height() / 2 + i * 40),
+			text(`${i + 1}. ${s.name.substring(0, 8)} — ${Number(s.time).toFixed(2)}s — ${s.points} pont`, { size: 20 }),
+			pos(width() / 2, height() / 2 - 100 + i * 30),
 			anchor("center"),
 		]);
 	});
@@ -156,7 +198,7 @@ scene("scoreboard", async () => {
 
 	add([
 		rect(300, 40), // Fix terület a scoreboard gombnak
-		pos(width() / 2, height() - 80),
+		pos(width() / 2, height() * 42 / 50),
 		anchor("center"),
 		color(0, 0, 0, 0), // Átlátszó háttér
 		area(),
@@ -166,7 +208,7 @@ scene("scoreboard", async () => {
 
 	add([
 		text(backTextStr, { size: backSize }),
-		pos(width() / 2, height() - 80),
+		pos(width() / 2, height() * 42 / 50),
 		anchor("center"),
 		color(255, 255, 255),
 		z(11),
@@ -177,12 +219,7 @@ scene("scoreboard", async () => {
 
 scene("battle", () => {
 
-	const BULLET_SPEED = 1200
-	const TRASH_SPEED = 120
-	const BOSS_SPEED = 48
-	const PLAYER_SPEED = 480
-	const BOSS_HEALTH = 100
-	const OBJ_HEALTH = 4
+
 	const bossName = choose(objs)
 
 	let insaneMode = false
@@ -190,66 +227,18 @@ scene("battle", () => {
 	const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
 	let points = 0;
-	let movingLeft = false;
-	let movingRight = false;
 	let gameEnd = false;
 
-
-
-	const player = add([
+	player = add([
 		sprite("lovesz"),
 		area(),
 		pos(width() / 2, height() - 64),
 		anchor("center"),
 	])
 
-	// Mobil gombok megjelenítése / elrejtése
-	if (isMobile) {
-		const btnSize = 80;
+	player.pos.y = height() * 425 / 500;
 
-		const leftBtn = add([
-			text("⬅️", { size: 48 }),
-			pos(60, height() - 100),
-			area(),
-			scale(1.2),
-			opacity(0.7),
-			"leftBtn",
-			fixed()
-		]);
 
-		const shootBtn = add([
-			text("🔫", { size: 48 }),
-			pos(width() / 2, height() - 100),
-			area(),
-			scale(1.2),
-			opacity(0.7),
-			"shootBtn",
-			fixed()
-		]);
-
-		const rightBtn = add([
-			text("➡️", { size: 48 }),
-			pos(width() - 100, height() - 100),
-			area(),
-			scale(1.2),
-			opacity(0.7),
-			"rightBtn",
-			fixed()
-		]);
-
-		// Interakciók
-		onTouchStart("leftBtn", () => movingLeft = true);
-		onTouchEnd("leftBtn", () => movingLeft = false);
-
-		onTouchStart("rightBtn", () => movingRight = true);
-		onTouchEnd("rightBtn", () => movingRight = false);
-		
-		onTouchStart("shootBtn", () => {
-			spawnBullet(player.pos.sub(16, 0));
-			spawnBullet(player.pos.add(16, 0));
-			play("shoot", { volume: 0.3, detune: rand(-1200, 1200) });
-		});
-	}
 
 	const music = play("OtherworldlyFoe", { loop: true })
 
@@ -281,7 +270,7 @@ scene("battle", () => {
 	}
 
 	add([
-		text("KILL", { size: 160 }),
+		text("ÖLD", { size: 140 , font: "myfont"}),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(1),
@@ -289,7 +278,7 @@ scene("battle", () => {
 	])
 
 	add([
-		text("THE", { size: 80 }),
+		text("A", { size: 100 , font: "myfont"}),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(2),
@@ -298,7 +287,7 @@ scene("battle", () => {
 	])
 
 	add([
-		text("PIGS", { size: 120 }),
+		text("DISZNÓKAT", { size: 110 , font: "myfont"}),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(4),
@@ -392,20 +381,7 @@ scene("battle", () => {
 		}
 	}
 
-	function spawnBullet(p) {
-		add([
-			sprite("lovedek"),
-			area(),
-			pos(p),
-			anchor("center"),
-			color(127, 127, 255),
-			outline(4),
-			move(UP, BULLET_SPEED),
-			offscreen({ destroy: true }),
-			// strings here means a tag
-			"bullet",
-		])
-	}
+
 
 	onUpdate("bullet", (b) => {
 		if (insaneMode) {
@@ -482,6 +458,7 @@ scene("battle", () => {
 	])
 
 	timer.onUpdate(() => {
+		if (gameEnd) return;
 		timer.time += dt()
 		timer.text = timer.time.toFixed(2)
 	})
@@ -513,7 +490,7 @@ scene("battle", () => {
 		healthbar.set(boss.hp())
 	})
 
-	boss.onDeath(async () => {
+	boss.onDeath(() => {
 		if (gameEnd) return;
 		music.stop();
 		gameEnd = true;
@@ -521,10 +498,8 @@ scene("battle", () => {
 		get("bullet").forEach(b => destroy(b));
 		player.hidden = true;
 
-		// Pont mentése
-		await showSaveScore(timer.time, points);
 
-		go("win", { time: timer.time, boss: bossName });
+		go("win", { time: timer.time, boss: bossName, points: points });
 	});
 
 	const healthbar = add([
@@ -574,7 +549,7 @@ scene("battle", () => {
 
 })
 
-scene("win", ({ time, boss }) => {
+scene("win", async ({ time, boss, points }) => {
 
 	const b = burp()
 	const detuneLoop = loop(0.5, () => {
@@ -595,7 +570,9 @@ scene("win", ({ time, boss }) => {
 		pos(width() / 2, height() / 2),
 	])
 
-	wait(3, () => {
+	// Pont mentése
+	await showSaveScore(time, points);
+	wait(2, () => {
 		detuneLoop.cancel()
 		b.stop()
 		go("menu")
