@@ -79,27 +79,20 @@ scene("menu", () => {
 		anchor("center"),
 	])
 
-	const startBtn = add([
+	add([
 		text("▶️ Indítás", { size: 32 }),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		area(),
+		z(20),
 		"startBtn"
 	])
-	///
-	add([
-		rect(startBtn.width, startBtn.height),
-		pos(startBtn.pos),
-		origin("center"),
-		color(255, 0, 0),
-		opacity(0.3),
-	])
-	///
 	add([
 		text("🏆 Scoreboard", { size: 24 }),
 		pos(width() / 2, height() / 2 + 80),
 		anchor("center"),
 		area(),
+		z(20),
 		"scoreBtn"
 	])
 
@@ -109,6 +102,19 @@ scene("menu", () => {
 
 	onClick("scoreBtn", () => {
 		go("scoreboard")
+	})
+	///
+	// Teszteljük a területet:
+	onHover("startBtn", (btn) => {
+		// Ha az egeret ráviszi / megérinti:
+		btn.color = rgb(255, 255, 0)
+		setCursor("pointer") // Asztali gépen mutatóvá teszi az egeret
+	})
+
+	onHoverEnd("startBtn", (btn) => {
+		// Ha elhagyja:
+		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
+		setCursor("default")
 	})
 })
 
@@ -134,6 +140,7 @@ scene("scoreboard", async () => {
 		pos(width() / 2, height() - 80),
 		anchor("center"),
 		area(),
+		z(20),
 		"backBtn"
 	]);
 
@@ -202,14 +209,13 @@ scene("battle", () => {
 			fixed()
 		]);
 
-		// Interakciók
-		onTouchStart("leftBtn", () => movingLeft = true);
-		onTouchEnd("leftBtn", () => movingLeft = false);
+		onPress("leftBtn", () => movingLeft = true);
+		onRelease("leftBtn", () => movingLeft = false);
 
-		onTouchStart("rightBtn", () => movingRight = true);
-		onTouchEnd("rightBtn", () => movingRight = false);
+		onPress("rightBtn", () => movingRight = true);
+		onRelease("rightBtn", () => movingRight = false);
 
-		onTouchStart("shootBtn", () => {
+		onPress("shootBtn", () => {
 			spawnBullet(player.pos.sub(16, 0));
 			spawnBullet(player.pos.add(16, 0));
 			play("shoot", { volume: 0.3, detune: rand(-1200, 1200) });
