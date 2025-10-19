@@ -14,7 +14,9 @@ body {
 }
 
 /* Főcímek */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-bottom: 10px;
   color: #333;
@@ -42,7 +44,7 @@ h3 {
   padding: 20px;
   margin: 20px auto;
   max-width: 600px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
 }
 
@@ -76,21 +78,22 @@ h3 {
 
 /* Játék rész */
 #game-section {
-    margin: 40px auto;
-    max-width: 640px;
-    text-align: center;
-    position: relative; 
+  margin: 40px auto;
+  max-width: 640px;
+  text-align: center;
+  position: relative;
 }
 
 #game-section canvas {
-    display: block;
-    margin: 0 auto;
-    border: 4px solid #4a3052;
-    border-radius: 12px;
-    background: black;
-    
-    position: relative; 
-    z-index: 10; 
+  touch-action: none;
+  display: block;
+  margin: 0 auto;
+  border: 4px solid #4a3052;
+  border-radius: 12px;
+  background: black;
+
+  position: relative;
+  z-index: 10;
 }
 
 /* Mobil irányítók */
@@ -142,19 +145,23 @@ h3 {
   body {
     padding: 10px;
   }
+
   .character {
     padding: 15px;
   }
+
   #controls {
     gap: 10px;
   }
+
   .control-btn {
     padding: 0.8rem;
   }
 }
 
-html, body {
-  touch-action: none;
+html,
+body {
+  touch-action: manipulation;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
