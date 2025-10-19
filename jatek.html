@@ -10,25 +10,29 @@
 </head>
 
 <body>
+    <div class="top-bar">
+        <a href="index.html" class="game-button">🏠 Vissza a főoldalra</a>
+    </div>
     <div id="overlay"></div>
     <div id="nameInputWrapper"
         style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
         <input type="text" id="nameInput" placeholder="Add meg a neved" />
         <button id="saveScoreBtn">Mentés</button>
     </div>
-    <div id="game-section">
-        <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
-        <script type="module" src="jatek/jatek.js" defer></script>
-    </div>
+    <canvas id="gameCanvas"></canvas>
+
     <div id="controls">
         <div class="control-btn" id="left">⬅️</div>
         <div class="control-btn" id="shoot">🔫</div>
         <div class="control-btn" id="right">➡️</div>
     </div>
 
-    <div style="text-align:center; margin-top:20px;">
-        <a href="index.html" class="game-button">🏠 Vissza a főoldalra</a>
-    </div>
+    <script src="https://unpkg.com/kaboom/dist/kaboom.js"></script>
+    <script type="module" src="jatek/jatek.js"></script>
+
+
 </body>
+
+
 
 </html>

@@ -76,25 +76,7 @@ h3 {
   border-radius: 6px;
 }
 
-/* Játék rész */
-#game-section {
-  margin: 40px auto;
-  max-width: 640px;
-  text-align: center;
-  position: relative;
-}
 
-#game-section canvas {
-  touch-action: none;
-  display: block;
-  margin: 0 auto;
-  border: 4px solid #4a3052;
-  border-radius: 12px;
-  background: black;
-
-  position: relative;
-  z-index: 10;
-}
 
 /* Mobil irányítók */
 #controls {
@@ -125,20 +107,7 @@ h3 {
   background: rgba(255, 255, 255, 0.3);
 }
 
-.game-button {
-  display: inline-block;
-  background: #4a3052;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  text-decoration: none;
-  transition: background 0.2s;
-}
 
-.game-button:hover {
-  background: #6a4f72;
-}
 
 /* Reszponzív finomhangolás */
 @media (max-width: 768px) {
@@ -168,71 +137,121 @@ body {
 
 /* Overlay */
 #overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* sötétítés */
-    z-index: 900; /* modal alatt */
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  /* sötétítés */
+  z-index: 900;
+  /* modal alatt */
 }
 
 /* Name input modal */
 #nameInputWrapper {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #3a2c4b;
-    padding: 30px 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
-    text-align: center;
-    z-index: 1000;
-    min-width: 280px;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #3a2c4b;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  z-index: 1000;
+  min-width: 280px;
 }
 
 #nameInputWrapper input {
-    padding: 10px 15px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    width: 80%;
-    margin-bottom: 20px;
+  padding: 10px 15px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  width: 80%;
+  margin-bottom: 20px;
 }
 
 #saveScoreBtn {
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    background-color: #e63946;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e63946;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 #saveScoreBtn:hover {
-    background-color: #d62839;
+  background-color: #d62839;
 }
 
 /* Mobilra */
 @media (max-width: 480px) {
-    #nameInputWrapper {
-        padding: 20px 25px;
-        min-width: 220px;
-    }
+  #nameInputWrapper {
+    padding: 20px 25px;
+    min-width: 220px;
+  }
 
-    #nameInputWrapper input {
-        font-size: 16px;
-        padding: 8px 12px;
-    }
+  #nameInputWrapper input {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
 
-    #saveScoreBtn {
-        font-size: 16px;
-        padding: 8px 16px;
-    }
+  #saveScoreBtn {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#game-section {
+  position: absolute;
+  top: 70px;                  /* <<< pont a sáv alá kerül */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 70px); /* <<< maradék helyet foglalja */
+  overflow: hidden;
+}
+
+
+#gameCanvas {
+  position: absolute;
+  top: 70px; /* pont a sáv alá kerül */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 70px); /* kitölti a maradék teret */
+  display: block;
+  background: black;
+  z-index: 100;
+}
+
+.game-button {
+  background: #4a3052;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.game-button:hover {
+  background: #6a4f72;
 }

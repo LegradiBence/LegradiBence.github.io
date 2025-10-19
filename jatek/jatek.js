@@ -7,6 +7,9 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 kaboom({
+	canvas: document.getElementById("gameCanvas"),
+	width: window.innerWidth,
+	height: window.innerHeight - 70,
 	background: [74, 48, 82],
 })
 
@@ -102,8 +105,16 @@ let movingLeft = false;
 let movingRight = false;
 
 leftBtn.addEventListener("mousedown", () => movingLeft = true);
+leftBtn.addEventListener("touchstart", () => movingLeft = true);
+
 rightBtn.addEventListener("mousedown", () => movingRight = true);
+rightBtn.addEventListener("touchstart", () => movingRight = true);
+
 document.addEventListener("mouseup", () => {
+	movingLeft = false;
+	movingRight = false;
+});
+document.addEventListener("touchend", () => {
 	movingLeft = false;
 	movingRight = false;
 });
@@ -198,7 +209,7 @@ scene("scoreboard", async () => {
 
 	add([
 		rect(300, 40), // Fix terület a scoreboard gombnak
-		pos(width() / 2, height() * 42 / 50),
+		pos(width() / 2, height() * 4 / 5),
 		anchor("center"),
 		color(0, 0, 0, 0), // Átlátszó háttér
 		area(),
@@ -208,7 +219,7 @@ scene("scoreboard", async () => {
 
 	add([
 		text(backTextStr, { size: backSize }),
-		pos(width() / 2, height() * 42 / 50),
+		pos(width() / 2, height() * 4 / 5),
 		anchor("center"),
 		color(255, 255, 255),
 		z(11),
@@ -270,7 +281,7 @@ scene("battle", () => {
 	}
 
 	add([
-		text("ÖLD", { size: 140 , font: "myfont"}),
+		text("ÖLD", { size: 140, font: "myfont" }),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(1),
@@ -278,7 +289,7 @@ scene("battle", () => {
 	])
 
 	add([
-		text("A", { size: 100 , font: "myfont"}),
+		text("A", { size: 100, font: "myfont" }),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(2),
@@ -287,7 +298,7 @@ scene("battle", () => {
 	])
 
 	add([
-		text("DISZNÓKAT", { size: 110 , font: "myfont"}),
+		text("DISZNÓKAT", { size: 110, font: "myfont" }),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		lifespan(4),
