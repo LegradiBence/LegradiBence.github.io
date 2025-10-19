@@ -149,6 +149,16 @@ scene("battle", () => {
 	let points = 0;
 	let movingLeft = false;
 	let movingRight = false;
+	let gameEnd = false;
+
+
+
+	const player = add([
+		sprite("lovesz"),
+		area(),
+		pos(width() / 2, height() - 64),
+		anchor("center"),
+	])
 
 	// Mobil gombok megjelenítése / elrejtése
 	if (isMobile) {
@@ -283,13 +293,6 @@ scene("battle", () => {
 	})
 
 
-	const player = add([
-		sprite("lovesz"),
-		area(),
-		pos(width() / 2, height() - 64),
-		anchor("center"),
-	])
-
 	onKeyDown("left", () => {
 		player.move(-PLAYER_SPEED, 0)
 		if (player.pos.x < 0) {
@@ -315,6 +318,7 @@ scene("battle", () => {
 	})
 
 	player.onCollide("enemy", (e) => {
+		if (gameEnd) return;
 		destroy(e)
 		destroy(player)
 		shake(120)
@@ -375,6 +379,7 @@ scene("battle", () => {
 	})
 
 	function spawnTrash() {
+		if (gameEnd) return;
 		const name = choose(objs.filter(n => n != bossName))
 		add([
 			sprite(name),
@@ -386,7 +391,9 @@ scene("battle", () => {
 			"enemy",
 			{ speed: rand(TRASH_SPEED * 0.7, TRASH_SPEED * 2) },
 		])
-		wait(insaneMode ? 0.3 : 0.5, spawnTrash)
+		wait(insaneMode ? 0.3 : 0.5, () => {
+			if (!gameEnd) spawnTrash()
+		})
 	}
 
 	const boss = add([
@@ -463,7 +470,9 @@ scene("battle", () => {
 	})
 
 	boss.onDeath(async () => {
+		if (gameEnd) return;
 		music.stop();
+		gameEnd = true;
 		get("trash").forEach(t => destroy(t));
 		get("bullet").forEach(b => destroy(b));
 		player.hidden = true;
@@ -509,18 +518,14 @@ scene("battle", () => {
 
 	// Folyamatos mozgatás
 	onUpdate(() => {
-		if (movingLeft) {
-			player.move(-PLAYER_SPEED, 0)
-			if (player.pos.x < 0) {
-				player.pos.x = width()
-			}
-		}
-		if (movingRight) {
-			player.move(PLAYER_SPEED, 0)
-			if (player.pos.x > width()) {
-				player.pos.x = 0
-			}
-		}
+		let vx = 0;
+		if (movingLeft || isKeyDown("left")) vx -= PLAYER_SPEED;
+		if (movingRight || isKeyDown("right")) vx += PLAYER_SPEED;
+		player.move(vx, 0);
+
+		// wrap around
+		if (player.pos.x < 0) player.pos.x = width();
+		if (player.pos.x > width()) player.pos.x = 0;
 	})
 
 })
