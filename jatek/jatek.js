@@ -116,6 +116,19 @@ scene("menu", () => {
 		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
 		setCursor("default")
 	})
+	// Teszteljük a területet:
+	onHover("scoreBtn", (btn) => {
+		// Ha az egeret ráviszi / megérinti:
+		btn.color = rgb(255, 255, 0)
+		setCursor("pointer") // Asztali gépen mutatóvá teszi az egeret
+	})
+
+	onHoverEnd("scoreBtn", (btn) => {
+		// Ha elhagyja:
+		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
+		setCursor("default")
+	})
+	///
 })
 
 scene("scoreboard", async () => {
@@ -143,7 +156,20 @@ scene("scoreboard", async () => {
 		z(20),
 		"backBtn"
 	]);
+	///
+	// Teszteljük a területet:
+	onHover("backBtn", (btn) => {
+		// Ha az egeret ráviszi / megérinti:
+		btn.color = rgb(255, 255, 0)
+		setCursor("pointer") // Asztali gépen mutatóvá teszi az egeret
+	})
 
+	onHoverEnd("backBtn", (btn) => {
+		// Ha elhagyja:
+		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
+		setCursor("default")
+	})
+	///
 	onClick("backBtn", () => go("menu"));
 });
 
