@@ -85,6 +85,7 @@ scene("menu", () => {
 		anchor("center"),
 		area(),
 		"startBtn",
+		debug(),
 	])
 
 	add([
@@ -93,6 +94,7 @@ scene("menu", () => {
 		anchor("center"),
 		area(),
 		"scoreBtn",
+		debug(),
 	])
 
 	onClick("startBtn", () => {
@@ -106,7 +108,7 @@ scene("menu", () => {
 
 scene("scoreboard", async () => {
 	add([
-		text("🏆 Top Darálók", { size: 48 }),
+		text("🏆 Top Darálók", { size: 44 }),
 		pos(width() / 2, height() / 4),
 		anchor("center"),
 	]);
@@ -127,6 +129,7 @@ scene("scoreboard", async () => {
 		anchor("center"),
 		area(),
 		"backBtn",
+		debug(),
 	]);
 
 	onClick("backBtn", () => go("menu"));
@@ -171,7 +174,8 @@ scene("battle", () => {
 			scale(1.2),
 			opacity(0.7),
 			"leftBtn",
-			fixed()
+			fixed(),
+			debug(),
 		]);
 
 		const shootBtn = add([
@@ -181,7 +185,8 @@ scene("battle", () => {
 			scale(1.2),
 			opacity(0.7),
 			"shootBtn",
-			fixed()
+			fixed(),
+			debug(),
 		]);
 
 		const rightBtn = add([
@@ -191,7 +196,8 @@ scene("battle", () => {
 			scale(1.2),
 			opacity(0.7),
 			"rightBtn",
-			fixed()
+			fixed(),
+			debug(),
 		]);
 
 		// Interakciók
@@ -319,6 +325,7 @@ scene("battle", () => {
 
 	player.onCollide("enemy", (e) => {
 		if (gameEnd) return;
+		gameEnd = true;
 		destroy(e)
 		destroy(player)
 		shake(120)
