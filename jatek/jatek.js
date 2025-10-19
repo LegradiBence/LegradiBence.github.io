@@ -1,12 +1,4 @@
-const firebaseConfig = {
-	apiKey: "AIzaSyBLyG5PdrBS0zL7bSDlTMPau2hOY2tWFKk",
-	authDomain: "kolbasztoltes-99ca5.firebaseapp.com",
-	projectId: "kolbasztoltes-99ca5",
-	storageBucket: "kolbasztoltes-99ca5.firebasestorage.app",
-	messagingSenderId: "473492625443",
-	appId: "1:473492625443:web:5334f2735a7385feacb996"
-};
-
+import { firebaseConfig } from "./firebaseConfig.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
@@ -123,7 +115,7 @@ scene("scoreboard", async () => {
 
 	scores.forEach((s, i) => {
 		add([
-			text(`${i + 1}. ${s.name} — ${s.time.toFixed(2)}s — ${s.points} pont`, { size: 24 }),
+			text(`${i + 1}. ${s.name} — ${Number(s.time).toFixed(2)}s — ${s.points} pont`, { size: 24 }),
 			pos(width() / 2, height() / 2 + i * 40),
 			anchor("center"),
 		]);
@@ -160,26 +152,50 @@ scene("battle", () => {
 
 	// Mobil gombok megjelenítése / elrejtése
 	if (isMobile) {
-		leftBtn.style.display = "flex";
-		rightBtn.style.display = "flex";
-		shootBtn.style.display = "flex";
+		const btnSize = 80;
 
-		// Reseteljük az eseményeket, hogy új körben is működjön
-		leftBtn.ontouchstart = () => movingLeft = true;
-		leftBtn.ontouchend = () => movingLeft = false;
+		const leftBtn = add([
+			text("⬅️", { size: 48 }),
+			pos(60, height() - 100),
+			area(),
+			scale(1.2),
+			opacity(0.7),
+			"leftBtn",
+			fixed()
+		]);
 
-		rightBtn.ontouchstart = () => movingRight = true;
-		rightBtn.ontouchend = () => movingRight = false;
+		const shootBtn = add([
+			text("🔫", { size: 48 }),
+			pos(width() / 2, height() - 100),
+			area(),
+			scale(1.2),
+			opacity(0.7),
+			"shootBtn",
+			fixed()
+		]);
 
-		shootBtn.ontouchstart = () => {
+		const rightBtn = add([
+			text("➡️", { size: 48 }),
+			pos(width() - 100, height() - 100),
+			area(),
+			scale(1.2),
+			opacity(0.7),
+			"rightBtn",
+			fixed()
+		]);
+
+		// Interakciók
+		onTouchStart("leftBtn", () => movingLeft = true);
+		onTouchEnd("leftBtn", () => movingLeft = false);
+
+		onTouchStart("rightBtn", () => movingRight = true);
+		onTouchEnd("rightBtn", () => movingRight = false);
+
+		onTouchStart("shootBtn", () => {
 			spawnBullet(player.pos.sub(16, 0));
 			spawnBullet(player.pos.add(16, 0));
 			play("shoot", { volume: 0.3, detune: rand(-1200, 1200) });
-		};
-	} else {
-		leftBtn.style.display = "none";
-		rightBtn.style.display = "none";
-		shootBtn.style.display = "none";
+		});
 	}
 
 	const music = play("OtherworldlyFoe", { loop: true })
