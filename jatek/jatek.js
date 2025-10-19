@@ -79,50 +79,50 @@ scene("menu", () => {
 		anchor("center"),
 	])
 
-const startText = "▶️ Indítás";
-    const startSize = 32;
-    
-    // 1. Definiáljuk a gombot (pl. egy rect-ként, aminek van area-ja)
-    add([
-        rect(300, 50), // 👈 Állíts be egy fix, látható területet a kattintáshoz (pl. 300x50 pixel)
-        pos(width() / 2, height() / 2),
-        anchor("center"),
-        color(0, 0, 0, 0), // 👈 Teljesen átlátszóvá tesszük a hátteret
-        area(),           // 👈 A téglalaphoz rendeljük a hitboxot
-        z(10),
-        "startBtn"
-    ]);
+	const startText = "▶️ Indítás";
+	const startSize = 32;
 
-    // 2. Hozzáadjuk a szöveget, ami a gomb fölött van
-    add([
-        text(startText, { size: startSize }),
-        pos(width() / 2, height() / 2),
-        anchor("center"),
-        color(255, 255, 255),
-        z(11), // Egyel magasabb z-index, hogy a téglalap fölött legyen
-    ]);
+	// 1. Definiáljuk a gombot (pl. egy rect-ként, aminek van area-ja)
+	add([
+		rect(300, 50), // 👈 Állíts be egy fix, látható területet a kattintáshoz (pl. 300x50 pixel)
+		pos(width() / 2, height() / 2),
+		anchor("center"),
+		color(0, 0, 0, 0), // 👈 Teljesen átlátszóvá tesszük a hátteret
+		area(),           // 👈 A téglalaphoz rendeljük a hitboxot
+		z(10),
+		"startBtn"
+	]);
 
-    // 🏆 SCOREBOARD GOMB
-    const scoreTextStr = "🏆 Scoreboard";
-    const scoreSize = 24;
+	// 2. Hozzáadjuk a szöveget, ami a gomb fölött van
+	add([
+		text(startText, { size: startSize }),
+		pos(width() / 2, height() / 2),
+		anchor("center"),
+		color(255, 255, 255),
+		z(11), // Egyel magasabb z-index, hogy a téglalap fölött legyen
+	]);
 
-    add([
-        rect(300, 40), // Fix terület a scoreboard gombnak
-        pos(width() / 2, height() / 2 + 80),
-        anchor("center"),
-        color(0, 0, 0, 0), // Átlátszó háttér
-        area(),
-        z(10),
-        "scoreBtn"
-    ]);
+	// 🏆 SCOREBOARD GOMB
+	const scoreTextStr = "🏆 Scoreboard";
+	const scoreSize = 24;
 
-    add([
-        text(scoreTextStr, { size: scoreSize }),
-        pos(width() / 2, height() / 2 + 80),
-        anchor("center"),
-        color(255, 255, 255),
-        z(11),
-    ]);
+	add([
+		rect(300, 40), // Fix terület a scoreboard gombnak
+		pos(width() / 2, height() / 2 + 80),
+		anchor("center"),
+		color(0, 0, 0, 0), // Átlátszó háttér
+		area(),
+		z(10),
+		"scoreBtn"
+	]);
+
+	add([
+		text(scoreTextStr, { size: scoreSize }),
+		pos(width() / 2, height() / 2 + 80),
+		anchor("center"),
+		color(255, 255, 255),
+		z(11),
+	]);
 
 	onClick("startBtn", () => {
 		go("battle")
@@ -151,26 +151,26 @@ scene("scoreboard", async () => {
 		]);
 	});
 
-    const backTextStr = "🔙 Vissza";
-    const backSize = 24;
+	const backTextStr = "🔙 Vissza";
+	const backSize = 24;
 
-    add([
-        rect(300, 40), // Fix terület a scoreboard gombnak
-        pos(width() / 2, height() - 80),
-        anchor("center"),
-        color(0, 0, 0, 0), // Átlátszó háttér
-        area(),
-        z(10),
-        "backBtn"
-    ]);
+	add([
+		rect(300, 40), // Fix terület a scoreboard gombnak
+		pos(width() / 2, height() - 80),
+		anchor("center"),
+		color(0, 0, 0, 0), // Átlátszó háttér
+		area(),
+		z(10),
+		"backBtn"
+	]);
 
-    add([
-        text(backTextStr, { size: backSize }),
-        pos(width() / 2, height() - 80),
-        anchor("center"),
-        color(255, 255, 255),
-        z(11),
-    ]);
+	add([
+		text(backTextStr, { size: backSize }),
+		pos(width() / 2, height() - 80),
+		anchor("center"),
+		color(255, 255, 255),
+		z(11),
+	]);
 
 	onClick("backBtn", () => go("menu"));
 });
@@ -237,13 +237,14 @@ scene("battle", () => {
 			fixed()
 		]);
 
-		onPress("leftBtn", () => movingLeft = true);
-		onRelease("leftBtn", () => movingLeft = false);
+		onMouseDown("leftBtn", () => movingLeft = true);
+		onMouseUp("leftBtn", () => movingLeft = false);
 
-		onPress("rightBtn", () => movingRight = true);
-		onRelease("rightBtn", () => movingRight = false);
+		onMouseDown("rightBtn", () => movingRight = true);
+		onMouseUp("rightBtn", () => movingRight = false);
 
-		onPress("shootBtn", () => {
+		onMouseDown("shootBtn", () => {
+
 			spawnBullet(player.pos.sub(16, 0));
 			spawnBullet(player.pos.add(16, 0));
 			play("shoot", { volume: 0.3, detune: rand(-1200, 1200) });
