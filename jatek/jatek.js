@@ -79,22 +79,50 @@ scene("menu", () => {
 		anchor("center"),
 	])
 
-	add([
-		text("▶️ Indítás", { size: 32 }),
-		pos(width() / 2, height() / 2),
-		anchor("center"),
-		area(),
-		z(20),
-		"startBtn"
-	])
-	add([
-		text("🏆 Scoreboard", { size: 24 }),
-		pos(width() / 2, height() / 2 + 80),
-		anchor("center"),
-		area(),
-		z(20),
-		"scoreBtn"
-	])
+const startText = "▶️ Indítás";
+    const startSize = 32;
+    
+    // 1. Definiáljuk a gombot (pl. egy rect-ként, aminek van area-ja)
+    add([
+        rect(300, 50), // 👈 Állíts be egy fix, látható területet a kattintáshoz (pl. 300x50 pixel)
+        pos(width() / 2, height() / 2),
+        anchor("center"),
+        color(0, 0, 0, 0), // 👈 Teljesen átlátszóvá tesszük a hátteret
+        area(),           // 👈 A téglalaphoz rendeljük a hitboxot
+        z(10),
+        "startBtn"
+    ]);
+
+    // 2. Hozzáadjuk a szöveget, ami a gomb fölött van
+    add([
+        text(startText, { size: startSize }),
+        pos(width() / 2, height() / 2),
+        anchor("center"),
+        color(255, 255, 255),
+        z(11), // Egyel magasabb z-index, hogy a téglalap fölött legyen
+    ]);
+
+    // 🏆 SCOREBOARD GOMB
+    const scoreTextStr = "🏆 Scoreboard";
+    const scoreSize = 24;
+
+    add([
+        rect(300, 40), // Fix terület a scoreboard gombnak
+        pos(width() / 2, height() / 2 + 80),
+        anchor("center"),
+        color(0, 0, 0, 0), // Átlátszó háttér
+        area(),
+        z(10),
+        "scoreBtn"
+    ]);
+
+    add([
+        text(scoreTextStr, { size: scoreSize }),
+        pos(width() / 2, height() / 2 + 80),
+        anchor("center"),
+        color(255, 255, 255),
+        z(11),
+    ]);
 
 	onClick("startBtn", () => {
 		go("battle")
@@ -103,32 +131,7 @@ scene("menu", () => {
 	onClick("scoreBtn", () => {
 		go("scoreboard")
 	})
-	///
-	// Teszteljük a területet:
-	onHover("startBtn", (btn) => {
-		// Ha az egeret ráviszi / megérinti:
-		btn.color = rgb(255, 255, 0)
-		setCursor("pointer") // Asztali gépen mutatóvá teszi az egeret
-	})
 
-	onHoverEnd("startBtn", (btn) => {
-		// Ha elhagyja:
-		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
-		setCursor("default")
-	})
-	// Teszteljük a területet:
-	onHover("scoreBtn", (btn) => {
-		// Ha az egeret ráviszi / megérinti:
-		btn.color = rgb(255, 255, 0)
-		setCursor("pointer") // Asztali gépen mutatóvá teszi az egeret
-	})
-
-	onHoverEnd("scoreBtn", (btn) => {
-		// Ha elhagyja:
-		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
-		setCursor("default")
-	})
-	///
 })
 
 scene("scoreboard", async () => {
@@ -148,28 +151,27 @@ scene("scoreboard", async () => {
 		]);
 	});
 
-	add([
-		text("🔙 Vissza", { size: 24 }),
-		pos(width() / 2, height() - 80),
-		anchor("center"),
-		area(),
-		z(20),
-		"backBtn"
-	]);
-	///
-	// Teszteljük a területet:
-	onHover("backBtn", (btn) => {
-		// Ha az egeret ráviszi / megérinti:
-		btn.color = rgb(255, 255, 0)
-		setCursor("pointer") // Asztali gépen mutatóvá teszi az egeret
-	})
+    const backTextStr = "🔙 Vissza";
+    const backSize = 24;
 
-	onHoverEnd("backBtn", (btn) => {
-		// Ha elhagyja:
-		btn.color = rgb(255, 255, 255) // Vissza az eredeti fehér színre
-		setCursor("default")
-	})
-	///
+    add([
+        rect(300, 40), // Fix terület a scoreboard gombnak
+        pos(width() / 2, height() - 80),
+        anchor("center"),
+        color(0, 0, 0, 0), // Átlátszó háttér
+        area(),
+        z(10),
+        "backBtn"
+    ]);
+
+    add([
+        text(backTextStr, { size: backSize }),
+        pos(width() / 2, height() - 80),
+        anchor("center"),
+        color(255, 255, 255),
+        z(11),
+    ]);
+
 	onClick("backBtn", () => go("menu"));
 });
 
