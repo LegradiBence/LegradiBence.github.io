@@ -79,22 +79,28 @@ scene("menu", () => {
 		anchor("center"),
 	])
 
-	add([
+	const startBtn = add([
 		text("▶️ Indítás", { size: 32 }),
 		pos(width() / 2, height() / 2),
 		anchor("center"),
 		area(),
-		"startBtn",
-		debug(),
+		"startBtn"
 	])
-
+	///
+	add([
+		rect(startBtn.width, startBtn.height),
+		pos(startBtn.pos),
+		origin("center"),
+		color(255, 0, 0),
+		opacity(0.3),
+	])
+	///
 	add([
 		text("🏆 Scoreboard", { size: 24 }),
 		pos(width() / 2, height() / 2 + 80),
 		anchor("center"),
 		area(),
-		"scoreBtn",
-		debug(),
+		"scoreBtn"
 	])
 
 	onClick("startBtn", () => {
@@ -128,8 +134,7 @@ scene("scoreboard", async () => {
 		pos(width() / 2, height() - 80),
 		anchor("center"),
 		area(),
-		"backBtn",
-		debug(),
+		"backBtn"
 	]);
 
 	onClick("backBtn", () => go("menu"));
@@ -174,8 +179,7 @@ scene("battle", () => {
 			scale(1.2),
 			opacity(0.7),
 			"leftBtn",
-			fixed(),
-			debug(),
+			fixed()
 		]);
 
 		const shootBtn = add([
@@ -185,8 +189,7 @@ scene("battle", () => {
 			scale(1.2),
 			opacity(0.7),
 			"shootBtn",
-			fixed(),
-			debug(),
+			fixed()
 		]);
 
 		const rightBtn = add([
@@ -196,8 +199,7 @@ scene("battle", () => {
 			scale(1.2),
 			opacity(0.7),
 			"rightBtn",
-			fixed(),
-			debug(),
+			fixed()
 		]);
 
 		// Interakciók
