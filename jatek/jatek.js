@@ -237,14 +237,14 @@ scene("battle", () => {
 			fixed()
 		]);
 
-		onMouseDown("leftBtn", () => movingLeft = true);
-		onMouseUp("leftBtn", () => movingLeft = false);
+		// Interakciók
+		onTouchStart("leftBtn", () => movingLeft = true);
+		onTouchEnd("leftBtn", () => movingLeft = false);
 
-		onMouseDown("rightBtn", () => movingRight = true);
-		onMouseUp("rightBtn", () => movingRight = false);
-
-		onMouseDown("shootBtn", () => {
-
+		onTouchStart("rightBtn", () => movingRight = true);
+		onTouchEnd("rightBtn", () => movingRight = false);
+		
+		onTouchStart("shootBtn", () => {
 			spawnBullet(player.pos.sub(16, 0));
 			spawnBullet(player.pos.add(16, 0));
 			play("shoot", { volume: 0.3, detune: rand(-1200, 1200) });
