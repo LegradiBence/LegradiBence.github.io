@@ -309,7 +309,8 @@ scene("battle", () => {
 	const scoreText = add([
 		text("Pont: 0", { size: 24 }),
 		pos(12, 64),
-		fixed()
+		fixed(),
+		z(10),
 	]);
 
 	onUpdate(() => {
@@ -466,6 +467,7 @@ scene("battle", () => {
 		pos(12, 32),
 		fixed(),
 		{ time: 0 },
+		z(10),
 	])
 
 	timer.onUpdate(() => {
