@@ -119,12 +119,7 @@ document.addEventListener("touchend", () => {
 	movingRight = false;
 });
 
-shootBtn.addEventListener("mousedown", () => {
-	spawnBullet(player.pos.sub(16, 0));
-	spawnBullet(player.pos.add(16, 0));
-});
-
-shootBtn.addEventListener("touchstart", () => {
+shootBtn.addEventListener("click", () => {
 	spawnBullet(player.pos.sub(16, 0));
 	spawnBullet(player.pos.add(16, 0));
 });
