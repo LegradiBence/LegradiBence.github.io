@@ -156,7 +156,7 @@ scene("menu", () => {
 	]);
 
 	// 🏆 SCOREBOARD GOMB
-	const scoreTextStr = "🏆 Scoreboard";
+	const scoreTextStr = "🏆 Eredménytábla";
 	const scoreSize = 24;
 
 	add([
@@ -198,8 +198,8 @@ scene("scoreboard", async () => {
 
 	scores.forEach((s, i) => {
 		add([
-			text(`${i + 1}. ${s.name.substring(0, 8)} — ${Number(s.time).toFixed(2)}s — ${s.points} pont`, { size: 20 }),
-			pos(width() / 2, height() / 2 - 100 + i * 30),
+			text(`${i + 1}. ${s.name.substring(0, 12)} — ${Number(s.time).toFixed(2)}s — ${s.points} pont`, { size: 15 }),
+			pos(width() / 2 , height() / 2 - 100 + i * 30),
 			anchor("center"),
 		]);
 	});
