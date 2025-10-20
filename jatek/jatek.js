@@ -199,7 +199,7 @@ scene("scoreboard", async () => {
 	scores.forEach((s, i) => {
 		add([
 			text(`${i + 1}. ${s.name.substring(0, 12)} — ${Number(s.time).toFixed(2)}s — ${s.points} pont`, { size: 15 }),
-			pos(width() / 2 , height() / 2 - 200 + i * 30),
+			pos(width() / 2 , height() / 2 - 150 + i * 30),
 			anchor("center"),
 		]);
 	});
