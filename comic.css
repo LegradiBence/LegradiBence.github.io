@@ -1,0 +1,111 @@
+
+.comic-viewer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  height: 100vh;
+  width: 100vw;
+  scroll-behavior: smooth;
+}
+
+.comic-page {
+  flex: 0 0 auto;
+  width: 700px;
+  height: 500px;
+  object-fit: contain;
+  scroll-snap-align: center;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+@media (orientation: portrait) {
+  .comic-page {
+    transform: rotate(90deg);
+    transform-origin: center;
+    width: 100vh;
+    height: 100vw;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comic-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 700px;
+  height: 500px;
+}
+
+#comicImage {
+  width: 700px;
+  height: 500px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 10px 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+#prevBtn {
+  left: -70px;
+}
+
+#nextBtn {
+  right: -70px;
+}
+
+/* 📱 Mobilbarát */
+@media (max-width: 800px) {
+  .comic-container {
+    width: 90vw;
+    height: auto;
+  }
+
+  #comicImage {
+    width: 90vw;
+    height: auto;
+  }
+
+  #prevBtn {
+    left: 10px;
+  }
+
+  #nextBtn {
+    right: 10px;
+  }
+
+  .nav-btn {
+    font-size: 1.8rem;
+    padding: 8px 14px;
+  }
+}

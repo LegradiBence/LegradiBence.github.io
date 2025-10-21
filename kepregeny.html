@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kolbásztöltés - Képregény</title>
+    <link rel="stylesheet" href="comic.css">
+
+</head>
+
+<body>
+    <div class="comic-container">
+        <button id="prevBtn" class="nav-btn">⬅️</button>
+
+        <img id="comicImage" src="kepregeny/kepr1.jpg" alt="Képregény oldal">
+
+        <button id="nextBtn" class="nav-btn">➡️</button>
+    </div>
+
+    <script>
+        const comicImages = [
+            "kepregeny/kepr1.jpg",
+            "kepregeny/kepr2.jpg",
+            "kepregeny/kepr3.jpg",
+            "kepregeny/kepr4.jpg",
+            "kepregeny/kepr5.jpg",
+            "kepregeny/kepr6.jpg",
+            "kepregeny/kepr7.jpg",
+        ];
+
+        let currentPage = 0;
+
+        const comicImage = document.getElementById("comicImage");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        // --- Frissíti a képet és a gombokat ---
+        function updateComic() {
+            comicImage.src = comicImages[currentPage];
+
+            prevBtn.style.visibility = currentPage === 0 ? "hidden" : "visible";
+
+            if (currentPage === comicImages.length - 1) {
+                nextBtn.textContent = "Játék▶️";
+            } else {
+                nextBtn.textContent = "➡️";
+            }
+        }
+
+        nextBtn.addEventListener("click", () => {
+            if (currentPage < comicImages.length - 1) {
+                currentPage++;
+                updateComic();
+            } else {
+                window.location.href = "jatek.html";
+            }
+        });
+
+        prevBtn.addEventListener("click", () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updateComic();
+            }
+        });
+
+        updateComic();
+    </script>
+</body>
+
+</html>
