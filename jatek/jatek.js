@@ -10,7 +10,7 @@ kaboom({
 	canvas: document.getElementById("gameCanvas"),
 	width: window.innerWidth,
 	height: window.innerHeight - 70,
-	background: [74, 48, 82],
+	background: [128, 77, 2],
 })
 
 const objs = [
